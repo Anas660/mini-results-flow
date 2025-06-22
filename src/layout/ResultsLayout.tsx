@@ -1,7 +1,7 @@
 import { ArrowRight, ArrowLeft } from "react-feather";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png"
+import logo from "../assets/logo.png"
 import { motion, AnimatePresence } from "framer-motion";
 
 const BUTTON_COLOR = "#36BC9F";

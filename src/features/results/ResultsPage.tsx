@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import Result1Card from "./cards/Result1Card";
+import Result2Card from "./cards/Result2Card";
+import Result3Card from "./cards/Result3Card";
+import Result4Card from "./cards/Result4Card";
+import Result5Card from "./cards/Result5Card";
+import Result6Card from "./cards/Result6Card";
 import ResultsLayout from "../../layout/ResultsLayout";
 
 const steps = [
-  "Result1Card",
-  "Result2Card",
-  "Result3Card",
-  "Result4Card",
-  "Result5Card",
-  "Result6Card",
+  Result1Card,
+  Result2Card,
+  Result3Card,
+  Result4Card,
+  Result5Card,
+  Result6Card,
 ];
 
 const ResultsPage: React.FC = () => {

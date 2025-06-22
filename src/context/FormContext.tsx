@@ -2,12 +2,12 @@ import { createContext } from "react";
 
 export type FormData = {
   gender: "male" | "female" | "";
-  bodyFatPercent: number | "";
-  BMI: number | "";
-  calorieTarget: number | "";
-  waterIntake: number | "";
-  weightLossRate: number | "";
-  seeResultsDays: number | "";
+  bodyFatPercent: number;
+  BMI: number;
+  calorieTarget: number;
+  waterIntake: number;
+  weightLossRate: number;
+  seeResultsDays: number;
 };
 
 export type FormContextType = {
@@ -18,12 +18,12 @@ export type FormContextType = {
 
 export const defaultFormData: FormData = {
   gender: "",
-  bodyFatPercent: "",
-  BMI: "",
-  calorieTarget: "",
-  waterIntake: "",
-  weightLossRate: "",
-  seeResultsDays: "",
+  bodyFatPercent: 0,
+  BMI: 0,
+  calorieTarget: 0,
+  waterIntake: 0,
+  weightLossRate: 0,
+  seeResultsDays: 0,
 };
 
 export const FormContext = createContext<FormContextType | undefined>(undefined);
