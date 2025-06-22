@@ -1,0 +1,10 @@
+.bg-accent {
+  background-color: var(--color-accent);
+  color: #fff !important; /* Ensures button text is visible */
+}
+
+button.bg-accent:disabled, .bg-accent:disabled {
+  background-color: #ffd0cc !important;
+  color: #fff !important;
+  cursor: not-allowed;
+}
