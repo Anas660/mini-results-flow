@@ -1,7 +1,13 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { FormProvider } from "./context/FormProvider"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { FormProvider } from "./context/FormProvider";
 import FormPage from "./features/form/FormPage";
 import ResultsPage from "./features/results/ResultsPage";
+import SalesPage from "./features/sales/SalesPage";
 
 function App() {
   return (
@@ -10,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FormPage />} />
           <Route path="/results" element={<ResultsPage />} />
+          <Route path="/sales" element={<SalesPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
