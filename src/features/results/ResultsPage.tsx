@@ -1,0 +1,36 @@
+import React, { useState } from "react";
+import ResultsLayout from "../../layout/ResultsLayout";
+
+const steps = [
+  "Result1Card",
+  "Result2Card",
+  "Result3Card",
+  "Result4Card",
+  "Result5Card",
+  "Result6Card",
+];
+
+const ResultsPage: React.FC = () => {
+  const [step, setStep] = useState(0);
+  const StepComponent = steps[step];
+  const goNext = () => setStep((s) => Math.min(s + 1, steps.length - 1));
+  const goBack = () => setStep((s) => Math.max(s - 1, 0));
+
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <ResultsLayout
+        heading={`Step ${step + 1} of ${steps.length}`}
+        onNext={goNext}
+        onBack={goBack}
+        showBack={step > 0}
+        isLast={step === steps.length - 1}
+        step={step + 1}
+        totalSteps={steps.length}
+      >
+        <StepComponent />
+      </ResultsLayout>
+    </main>
+  );
+};
+
+export default ResultsPage;
