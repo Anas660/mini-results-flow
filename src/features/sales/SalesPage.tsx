@@ -12,6 +12,7 @@ import GuaranteeSection from "./components/GuaranteeSection";
 const SalesPage: React.FC = () => {
   const navigate = useNavigate();
   const planHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const offerCardRef = useRef<HTMLDivElement | null>(null); // Add ref for OfferCard
   const [showStickyClaim, setShowStickyClaim] = useState(true);
   const hasHeadingBeenVisible = useRef(false);
 
@@ -19,25 +20,47 @@ const SalesPage: React.FC = () => {
   const [countdown, setCountdown] = useState(600); // 10 minutes in seconds
   const [timerStarted, setTimerStarted] = useState(false);
 
-  // Observe heading for sticky button and timer start
   useEffect(() => {
     const planHeading = planHeadingRef.current;
-    if (!planHeading) return;
+    const guaranteeSection = document.getElementById("guarantee-section");
+    const offerCard = offerCardRef.current;
 
-    const observer = new window.IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          hasHeadingBeenVisible.current = true;
-          setShowStickyClaim(false);
-          setTimerStarted(true);
-        } else if (!hasHeadingBeenVisible.current) {
-          setShowStickyClaim(true);
-        }
-      },
-      { root: null, threshold: 0 }
-    );
-    observer.observe(planHeading);
-    return () => observer.disconnect();
+    const isVisible = (el: HTMLElement | null) => {
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    };
+
+    const handleScroll = () => {
+      // Hide sticky button if GuaranteeSection or OfferCard is visible
+      if (isVisible(guaranteeSection) || isVisible(offerCard)) {
+        setShowStickyClaim(false);
+      } else {
+        setShowStickyClaim(true);
+      }
+    };
+
+    // IntersectionObserver for plan heading (to start timer)
+    if (planHeading) {
+      const observer = new window.IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            hasHeadingBeenVisible.current = true;
+            setTimerStarted(true);
+          }
+        },
+        { root: null, threshold: 0 }
+      );
+      observer.observe(planHeading);
+
+      window.addEventListener("scroll", handleScroll);
+      handleScroll();
+
+      return () => {
+        observer.disconnect();
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, []);
 
   // Countdown effect
@@ -67,19 +90,23 @@ const SalesPage: React.FC = () => {
         />
       )}
       <Header />
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 w-full max-w-md mx-auto flex flex-col items-center mb-6">
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 w-full max-w-xl mx-auto flex flex-col items-center mb-6">
         <ComparisonTable />
         <BenefitsList />
         <ToolsSection />
         <TrustedBySection />
-        <OfferCard
-          planHeadingRef={planHeadingRef}
-          countdown={countdown}
-          formatCountdown={formatCountdown}
-          navigate={navigate}
-        />
+        <div ref={offerCardRef} className="w-full">
+          <OfferCard
+            planHeadingRef={planHeadingRef}
+            countdown={countdown}
+            formatCountdown={formatCountdown}
+            navigate={navigate}
+          />
+        </div>
       </div>
-      <GuaranteeSection />
+      <div id="guarantee-section">
+        <GuaranteeSection />
+      </div>
     </div>
   );
 };

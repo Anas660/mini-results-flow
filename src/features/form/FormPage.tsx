@@ -101,7 +101,7 @@ const FormPage: React.FC = () => {
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-2xl p-4 sm:p-8 w-full max-w-lg space-y-6"
+        className="bg-white shadow-xl rounded-2xl p-4 sm:p-8 w-full max-w-xl space-y-6"
         aria-label="Results Input Form"
         noValidate
       >

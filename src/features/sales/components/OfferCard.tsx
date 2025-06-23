@@ -103,7 +103,10 @@ const OfferCard: React.FC<OfferCardProps> = ({
                 color: "#000",
                 fontWeight: 700,
                 fontSize: "16px",
-                border: selected==="full" ? "2px solid #36BC9F": "2px solid #E6FAF6",
+                border:
+                  selected === "full"
+                    ? "2px solid #36BC9F"
+                    : "2px solid #E6FAF6",
                 borderTopRightRadius: "10px",
                 borderBottomLeftRadius: "10px",
                 padding: "4px 16px",
@@ -170,7 +173,11 @@ const OfferCard: React.FC<OfferCardProps> = ({
         </span>
       </div>
       <button
-        className="w-full bg-[#36BC9F] hover:bg-[#2ea88c] text-white font-bold text-lg py-3 rounded-xl flex items-center justify-center transition mb-2"
+        className="bg-[#36BC9F] hover:bg-[#2ea88c] text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg"
+        style={{
+          boxShadow: "0 2px 8px 0 rgba(54,188,159,0.10)",
+          alignSelf: "center",
+        }}
         onClick={() =>
           alert(
             `Thank you for continuing with the ${
@@ -178,9 +185,12 @@ const OfferCard: React.FC<OfferCardProps> = ({
             } option!`
           )
         }
+        aria-label="Scroll to plan section"
       >
-        Continue
-        <ArrowRight size={24} className="ml-2" />
+        <span className="mx-auto">Continue</span>
+        <span className="absolute right-6 text-lg">
+          <ArrowRight size={20} style={{ color: "white" }} />
+        </span>
       </button>
       <div className="w-full text-center mt-2">
         <button

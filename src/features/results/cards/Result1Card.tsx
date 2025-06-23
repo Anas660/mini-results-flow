@@ -33,7 +33,7 @@ const Result1Card: React.FC = () => {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 w-full max-w-md mx-auto flex flex-col items-center mb-6">
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 w-full max-w-xl flex flex-col items-center mb-6">
       {/* Icon */}
       <div className="flex justify-center items-center mb-2">
         <span className="text-[34px]">⚖️</span>
@@ -62,7 +62,7 @@ const Result1Card: React.FC = () => {
           alt="Muscle Mass"
           className="rounded-lg"
           style={{ width: "auto", height: "auto" }}
-          loading="lazy"
+          loading="eager"
         />
       </div>
       {/* Description */}

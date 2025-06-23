@@ -1,7 +1,7 @@
 import { ArrowRight, ArrowLeft } from "react-feather";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 import { motion, AnimatePresence } from "framer-motion";
 
 const BUTTON_COLOR = "#36BC9F";
@@ -24,15 +24,7 @@ const ResultsLayout: React.FC<{
   heading: string;
   step: number; // current step, 1-based
   totalSteps: number;
-}> = ({
-  children,
-  onNext,
-  onBack,
-  showBack,
-  isLast,
-  step,
-  totalSteps,
-}) => {
+}> = ({ children, onNext, onBack, showBack, isLast, step, totalSteps }) => {
   const navigate = useNavigate();
 
   const handleNext = () => {
@@ -54,31 +46,31 @@ const ResultsLayout: React.FC<{
         <img src={logo} alt="Logo" className="h-10" />
       </div>
       {/* Header Row */}
-      <div className="w-full max-w-md px-4 flex items-center justify-between pt-2 pb-2 mb-4">
+      <div className="w-full max-w-xl px-4 flex items-center justify-between pt-2 pb-2 mb-4">
         {/* Heading on the left */}
-        <h2
-          className="text-sm font-semibold"
-          style={{ color: BUTTON_COLOR }}
-        >
+        <h2 className="text-md font-semibold" style={{ color: BUTTON_COLOR }}>
           Your Results
         </h2>
         {/* Dots on the right */}
         <div className="flex gap-1">
-            {Array.from({ length: totalSteps }).map((_, idx) => (
-              <span
-                key={idx}
-                className="inline-block rounded-full"
-                style={{
-                  width: 8,
-                  height: 8,
-                  backgroundColor: idx < step ? BUTTON_COLOR : "#D1D5DB",
-                  transition: "background 0.2s",
-                }}
-              />
-            ))}
+          {Array.from({ length: totalSteps }).map((_, idx) => (
+            <span
+              key={idx}
+              className="inline-block rounded-full"
+              style={{
+                width: 8,
+                height: 8,
+                backgroundColor: idx < step ? BUTTON_COLOR : "#D1D5DB",
+                transition: "background 0.2s",
+              }}
+            />
+          ))}
         </div>
       </div>
-      <div className="w-full flex flex-col items-center pb-6">
+      <div
+        className="w-full flex flex-col items-center pb-6"
+        style={{ minHeight: "30vh" }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -86,14 +78,17 @@ const ResultsLayout: React.FC<{
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.3 }}
-            className="w-full"
+            className="w-full max-w-xl"
+            style={{ minHeight: "20vh" }} // adjust as needed for your content
           >
             {children}
           </motion.div>
         </AnimatePresence>
       </div>
       {/* Buttons come right after content, not stuck to bottom */}
-      <div className="w-full max-w-md px-4 mt-4 mb-8">
+      <div className="w-full max-w-xl px-4 mt-4 mb-8">
+        {" "}
+        {/* max-w-xl */}
         <div className={`flex w-full gap-4 ${showBack ? "" : "justify-end"}`}>
           {showBack && backButtonLabel && (
             <button

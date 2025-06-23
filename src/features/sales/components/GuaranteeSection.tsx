@@ -2,7 +2,7 @@ import React from "react";
 import guarantee from "../../../assets/guarantee.png";
 
 const GuaranteeSection: React.FC = () => (
-  <div className="w-full max-w-md flex flex-col gap-2 mt-8 px-2">
+  <div className="w-full max-w-xl flex flex-col gap-2 mt-8 px-2">
     <div className="flex items-center gap-4 mb-2">
       <h3 className="font-bold text-4xl sm:text-5xl text-[#13556F] flex-1">
         Money Back Guarantee
