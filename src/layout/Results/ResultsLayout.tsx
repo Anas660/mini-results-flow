@@ -1,9 +1,9 @@
 import { ArrowRight, ArrowLeft } from "react-feather";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
 import { motion, AnimatePresence } from "framer-motion";
-import { ThemeContext } from "../context/theme/ThemeContext";
+import { ThemeContext } from "../../context/theme/ThemeContext";
+import Header from "../Header/Header";
 
 const STEP_NAMES = [
   "", // step 1, no back button
@@ -46,10 +46,7 @@ const ResultsLayout: React.FC<{
       className="relative w-full flex flex-col items-center"
       style={{ background: colors.background }}
     >
-      {/* Logo at the top center */}
-      <div className="w-full flex justify-center pt-6 pb-2">
-        <img src={logo} alt="Logo" className="h-10" />
-      </div>
+      <Header />
       {/* Header Row */}
       <div className="w-full max-w-xl px-4 flex items-center justify-between pt-2 pb-2 mb-4">
         {/* Heading on the left */}
@@ -96,7 +93,7 @@ const ResultsLayout: React.FC<{
           {showBack && backButtonLabel && (
             <button
               type="button"
-              className="font-bold py-2 rounded-lg shadow transition w-1/2 flex items-center justify-between"
+              className="font-bold py-2 rounded-lg shadow transition w-1/2 flex items-center justify-between cursor-pointer"
               style={{
                 background: colors.cardBackground,
                 borderColor: BUTTON_COLOR,
@@ -116,7 +113,7 @@ const ResultsLayout: React.FC<{
           {/* Always show Next button */}
           <button
             type="button"
-            className="text-white text-lg font-bold py-2 rounded-lg flex items-center justify-between gap-2 shadow transition hover:opacity-90 w-1/2"
+            className="text-white text-lg font-bold py-2 rounded-lg flex items-center justify-between gap-2 shadow transition hover:opacity-90 w-1/2 cursor-pointer"
             onClick={handleNext}
             style={{
               background: BUTTON_COLOR,

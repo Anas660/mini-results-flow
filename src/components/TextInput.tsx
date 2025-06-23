@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ThemeContext } from "../context/theme/ThemeContext";
 
 type Props = {
@@ -27,6 +27,14 @@ const TextInput: React.FC<Props> = ({
   placeholder,
 }) => {
   const { colors } = useContext(ThemeContext);
+  const [touched, setTouched] = useState(false);
+
+  // Show validation if value is negative and type is number
+  const isNegative =
+    type === "number" &&
+    value !== "" &&
+    !isNaN(Number(value)) &&
+    Number(value) < 0;
 
   return (
     <div className="mb-4">
@@ -42,7 +50,10 @@ const TextInput: React.FC<Props> = ({
         name={name}
         type={type}
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+          onChange(e);
+          setTouched(true);
+        }}
         min={min}
         max={max}
         required={required}
@@ -57,6 +68,11 @@ const TextInput: React.FC<Props> = ({
         aria-required={required}
         aria-label={typeof label === "string" ? label : undefined}
       />
+      {isNegative && touched && (
+        <div className="text-xs mt-1" style={{ color: colors.accent2 }}>
+          Value cannot be negative.
+        </div>
+      )}
     </div>
   );
 };

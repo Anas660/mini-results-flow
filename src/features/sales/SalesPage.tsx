@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import StickyClaimButton from "./components/StickyClaimButton";
-import Header from "./components/Header";
+import Header from "../../layout/Header/Header";
 import ComparisonTable from "./components/ComparisonTable";
 import BenefitsList from "./components/BenefitsList";
 import ToolsSection from "./components/ToolsSection";

@@ -202,7 +202,7 @@ const OfferCard: React.FC<OfferCardProps> = ({
         </span>
       </div>
       <button
-        className="font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg"
+        className="font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg cursor-pointer"
         style={{
           background: colors.accent,
           color: colors.white,
@@ -226,7 +226,7 @@ const OfferCard: React.FC<OfferCardProps> = ({
       <div className="w-full text-center mt-2">
         <button
           className="underline text-base font-medium cursor-pointer"
-          style={{ pointerEvents: "auto", color: colors.cardBorder }}
+          style={{ pointerEvents: "auto", color: colors.textPrimary }}
           type="button"
           onClick={() => navigate("/")}
         >

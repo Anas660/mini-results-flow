@@ -10,7 +10,7 @@ import FormPage from "./features/form/FormPage";
 import ResultsPage from "./features/results/ResultsPage";
 import SalesPage from "./features/sales/SalesPage";
 import { ThemeContext, themeColors } from "./context/theme/ThemeContext";
-import ThemeToggle from "./layout/ThemeToggle";
+import ThemeToggle from "./layout/ThemeToggle/ThemeToggle";
 
 function App() {
   const [dark, setDark] = useState(() => {
