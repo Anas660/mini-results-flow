@@ -1,94 +1,46 @@
-import React, { useContext } from "react";
+import React from "react";
 import foodImage from "../../../assets/result3.png";
 import { useFormContext } from "../../../context/form/useFormContext";
-import { ThemeContext } from "../../../context/theme/ThemeContext";
+import ResultCardLayout from "../../../layout/Results/ResultCardLayout";
+import { getCalorieCallout } from "../../../utils/resultCallouts";
 
 const Result3Card: React.FC = () => {
   const { formData } = useFormContext();
-  const { calorieTarget } = formData;
-  const { colors } = useContext(ThemeContext);
-
-  // Helper to determine callout
-  let callout = "";
-  if (calorieTarget !== undefined && calorieTarget !== null) {
-    if (calorieTarget >= 1300 && calorieTarget <= 1500) {
-      callout =
-        "You’re already close — just upgrading your food quality could unlock smoother fat loss and better focus.";
-    } else if (calorieTarget >= 1100 && calorieTarget < 1300) {
-      callout =
-        "At this range, your body is primed to burn fat — but only if you're eating nutrient-dense, low-carb foods that stabilize your system.";
-    } else if (calorieTarget < 1100) {
-      callout =
-        "Extreme restriction can backfire — slowing your metabolism, increasing stress, and making results harder to sustain. Keto helps you eat smarter, not just less.";
-    }
-  }
+  const callout = getCalorieCallout(formData.calorieTarget);
 
   return (
-    <div
-      style={{
-        background: colors.cardBackground,
-        borderColor: colors.cardBorder,
-        color: colors.textPrimary,
-      }}
-      className="rounded-2xl shadow-xl border p-4 sm:p-8 w-full max-w-xl flex flex-col items-center mb-6"
-    >
-      {/* Icon */}
-      <div className="flex justify-center items-center mb-2">
-        <span className="text-[34px]">🔥</span>
-      </div>
-      {/* Headline */}
-      <h1
-        className="text-center text-[34px] leading-[1.2em] font-semibold font-inter mb-1"
-        style={{ color: colors.textPrimary }}
-      >
-        You Should Be Eating Around
-        <br />
-        <span style={{ color: colors.accent2 }}>
-          {calorieTarget !== undefined && calorieTarget !== null
-            ? `${calorieTarget} Calories`
-            : "--"}
-        </span>
-        <br />
-        <span
-          className="text-[20px] font-semibold font-inter"
-          style={{ color: colors.textPrimary }}
-        >
-          But Not All Calories Are Equal
-        </span>
-      </h1>
-      {/* Images */}
-      <div className="flex flex-row justify-center items-center gap-4 mb-4">
-        <img
-          src={foodImage}
-          alt="Calories Illustration"
-          className="rounded-lg"
-          style={{ width: "auto", height: "auto" }}
-          loading="eager"
-        />
-      </div>
-      {/* Description */}
-      <p
-        className="text-[20px] font-normal font-inter mb-2"
-        style={{ color: colors.textSecondary }}
-      >
-        Your body burns calories just to stay alive — that’s your BMR. Add in
-        movement, and you burn even more. Eat less than you burn? You lose weight.
-        Eat more? You store it. Simple math, but the <em>type</em> of calories still makes or breaks your results.
-        <br />
-        <br />
-        Most people eat low-quality calories that spike cravings, crash energy, and
-        cause fat to stick — even if they’re technically under their daily limit.
-      </p>
-      {/* Conditional Callout */}
-      {callout && (
-        <p
-          className="text-[16px] font-normal font-inter mt-2 mb-6"
-          style={{ color: colors.accent2 }}
-        >
-          {callout}
-        </p>
-      )}
-    </div>
+    <ResultCardLayout
+      icon={<span className="text-[34px]">🔥</span>}
+      headline={
+        <>
+          You Should Be Eating Around
+          <br />
+          <span style={{ color: "var(--accent2)" }}>
+            {formData.calorieTarget !== undefined && formData.calorieTarget !== null
+              ? `${formData.calorieTarget} Calories`
+              : "--"}
+          </span>
+          <br />
+          <span className="text-[20px] font-semibold font-inter" style={{ color: "inherit" }}>
+            But Not All Calories Are Equal
+          </span>
+        </>
+      }
+      image={foodImage}
+      imageAlt="Calories Illustration"
+      description={
+        <>
+          Your body burns calories just to stay alive — that’s your BMR. Add in
+          movement, and you burn even more. Eat less than you burn? You lose weight.
+          Eat more? You store it. Simple math, but the <em>type</em> of calories still makes or breaks your results.
+          <br />
+          <br />
+          Most people eat low-quality calories that spike cravings, crash energy, and
+          cause fat to stick — even if they’re technically under their daily limit.
+        </>
+      }
+      callout={callout}
+    />
   );
 };
 

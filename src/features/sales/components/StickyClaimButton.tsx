@@ -8,7 +8,7 @@ const StickyClaimButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4 pointer-events-none">
       <button
-        className="font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg"
+        className="font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg cursor-pointer"
         style={{
           background: colors.accent,
           color: colors.white,

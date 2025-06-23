@@ -6,6 +6,12 @@ import SliderInput from "../../components/SliderInput";
 import RadioGroup from "../../components/RadioGroup";
 import DropdownInput from "../../components/DropdownInput";
 import { ThemeContext } from "../../context/theme/ThemeContext";
+import {
+  validateForm,
+  getValidationMessage,
+} from "../../utils/formValidationUtils";
+import SubmitButton from "../../components/SubmitButton";
+import Header from "../../layout/Header/Header";
 
 const waterOptions = [
   { label: "1", value: 1 },
@@ -20,65 +26,49 @@ const FormPage: React.FC = () => {
   const navigate = useNavigate();
   const [touched, setTouched] = useState(false);
 
-  // Validation: all fields must be filled and numbers must be valid
-  const isValid =
-    formData.gender &&
-    formData.bodyFatPercent !== 0 &&
-    formData.BMI !== 0 &&
-    formData.calorieTarget !== 0 &&
-    formData.waterIntake !== 0 &&
-    formData.weightLossRate !== 0 &&
-    formData.seeResultsDays !== 0;
+  // Utility for numeric fields
+  const numericFields: Array<keyof typeof formData> = [
+    "bodyFatPercent",
+    "BMI",
+    "calorieTarget",
+    "waterIntake",
+    "weightLossRate",
+    "seeResultsDays",
+  ];
 
+  // Validation logic moved to utility
+  const isValid = validateForm(formData);
   // Helper for required asterisk
   const Required = () => (
-    <span aria-label="required" style={{ color: colors.accent2 }} className="ml-1">
+    <span
+      aria-label="required"
+      style={{ color: colors.accent2 }}
+      className="ml-1"
+    >
       *
     </span>
   );
 
-  // Helper for validation messages
-  const getValidationMessage = () => {
-    if (!formData.gender) return "Please select your gender.";
-    if (formData.bodyFatPercent === 0 || formData.bodyFatPercent === undefined)
-      return "Please enter your body fat percentage.";
-    if (formData.BMI === 0 || formData.BMI === undefined)
-      return "Please enter your BMI.";
-    if (formData.calorieTarget === 0 || formData.calorieTarget === undefined)
-      return "Please enter your daily calorie target.";
-    if (formData.waterIntake === 0 || formData.waterIntake === undefined)
-      return "Please select your daily water intake.";
-    if (formData.weightLossRate === 0 || formData.weightLossRate === undefined)
-      return "Please enter your weekly weight loss goal.";
-    if (formData.seeResultsDays === 0 || formData.seeResultsDays === undefined)
-      return "Please enter the number of days to see results.";
-    return "";
+  // Separate handler for all changes
+  // Helper to handle numeric field changes
+  const handleNumericChange = (name: string, value: string | number) => {
+    setFormData({ [name]: value === "" ? 0 : Number(value) });
   };
 
+  // Helper to handle non-numeric field changes
+  const handleTextChange = (name: string, value: string) => {
+    setFormData({ [name]: value });
+  };
+
+  // Main change handler
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
-    // Numeric fields in your form
-    const numericFields: Array<keyof typeof formData> = [
-      "bodyFatPercent",
-      "BMI",
-      "calorieTarget",
-      "waterIntake",
-      "weightLossRate",
-      "seeResultsDays",
-    ];
-
-    // We want to store as number (or empty string for blank) in context
     if (numericFields.includes(name as keyof typeof formData)) {
-      // Allow blank for controlled input, otherwise convert to number
-      const val = value === "" ? "" : Number(value);
-      if (val !== "" && isNaN(val)) return;
-      setFormData({ [name]: val });
+      handleNumericChange(name, value);
     } else {
-      // For non-numeric fields (like gender)
-      setFormData({ [name]: value });
+      handleTextChange(name, value);
     }
   };
 
@@ -96,6 +86,7 @@ const FormPage: React.FC = () => {
       className="min-h-screen flex flex-col items-center justify-center px-2 sm:px-4 py-6"
       aria-label="Form page for entering health details"
     >
+      <Header />
       <h1
         className="mb-8 text-[34px] leading-[1.2em] font-semibold text-center font-inter"
         style={{ letterSpacing: "-0.5px", color: colors.textAccent }}
@@ -236,19 +227,11 @@ const FormPage: React.FC = () => {
           placeholder="e.g. 30"
         />
 
-        <button
-          type="submit"
-          style={{
-            background: colors.accent,
-            color: colors.white,
-          }}
-          className="w-full mt-4 text-lg font-semibold py-3 rounded-xl transition disabled:opacity-50 font-inter hover:opacity-90 focus:outline-none focus:ring-2"
-          disabled={!isValid}
-          aria-disabled={!isValid}
-          aria-label="See My Results"
-        >
-          See My Results
-        </button>
+        <SubmitButton
+          isValid={isValid}
+          colors={colors}
+          label="See My Results"
+        />
         {/* Validation feedback */}
         {!isValid && touched && (
           <div
@@ -257,7 +240,7 @@ const FormPage: React.FC = () => {
             role="alert"
             aria-live="polite"
           >
-            {getValidationMessage()}
+            {getValidationMessage(formData)}
           </div>
         )}
         {/* Inline helper for why button is disabled */}

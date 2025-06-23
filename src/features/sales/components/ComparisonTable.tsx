@@ -3,6 +3,7 @@ import beforeImg from "../../../assets/fat.webp";
 import afterImg from "../../../assets/slim.webp";
 import arrows from "../../../assets/arrows.svg";
 import { ThemeContext } from "../../../context/theme/ThemeContext";
+import ProgressBar from "../../../components/ProgressBar";
 
 const ComparisonTable: React.FC = () => {
   const { colors } = useContext(ThemeContext);
@@ -92,43 +93,31 @@ const ComparisonTable: React.FC = () => {
             <div className="text-xs mb-1" style={{ color: colors.textSecondary }}>
               Energy Levels
             </div>
-            <div
-              className="w-full h-2 rounded"
-              style={{ background: colors.cardBorder }}
-            >
-              <div
-                className="h-2 rounded"
-                style={{ width: "30%", background: colors.accent2 }}
-              />
-            </div>
+            <ProgressBar
+              value={30}
+              color={colors.accent2}
+              background={colors.cardBorder}
+            />
           </div>
           <div>
             <div className="text-xs mb-1" style={{ color: colors.textSecondary }}>
               Physical Health
             </div>
-            <div
-              className="w-full h-2 rounded"
-              style={{ background: colors.cardBorder }}
-            >
-              <div
-                className="h-2 rounded"
-                style={{ width: "35%", background: colors.accent2 }}
-              />
-            </div>
+            <ProgressBar
+              value={35}
+              color={colors.accent2}
+              background={colors.cardBorder}
+            />
           </div>
           <div>
             <div className="text-xs mb-1" style={{ color: colors.textSecondary }}>
               Metabolism Speed
             </div>
-            <div
-              className="w-full h-2 rounded"
-              style={{ background: colors.cardBorder }}
-            >
-              <div
-                className="h-2 rounded"
-                style={{ width: "25%", background: colors.accent2 }}
-              />
-            </div>
+            <ProgressBar
+              value={25}
+              color={colors.accent2}
+              background={colors.cardBorder}
+            />
           </div>
         </div>
         {/* 6 Months Column */}
@@ -145,43 +134,31 @@ const ComparisonTable: React.FC = () => {
             <div className="text-xs mb-1" style={{ color: colors.textSecondary }}>
               Energy Levels
             </div>
-            <div
-              className="w-full h-2 rounded"
-              style={{ background: colors.cardBorder }}
-            >
-              <div
-                className="h-2 rounded"
-                style={{ width: "85%", background: colors.accent }}
-              />
-            </div>
+            <ProgressBar
+              value={85}
+              color={colors.accent}
+              background={colors.cardBorder}
+            />
           </div>
           <div>
             <div className="text-xs mb-1" style={{ color: colors.textSecondary }}>
               Physical Health
             </div>
-            <div
-              className="w-full h-2 rounded"
-              style={{ background: colors.cardBorder }}
-            >
-              <div
-                className="h-2 rounded"
-                style={{ width: "90%", background: colors.accent }}
-              />
-            </div>
+            <ProgressBar
+              value={90}
+              color={colors.accent}
+              background={colors.cardBorder}
+            />
           </div>
           <div>
             <div className="text-xs mb-1" style={{ color: colors.textSecondary }}>
               Metabolism Speed
             </div>
-            <div
-              className="w-full h-2 rounded"
-              style={{ background: colors.cardBorder }}
-            >
-              <div
-                className="h-2 rounded"
-                style={{ width: "80%", background: colors.accent }}
-              />
-            </div>
+            <ProgressBar
+              value={80}
+              color={colors.accent}
+              background={colors.cardBorder}
+            />
           </div>
         </div>
       </div>
