@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { FormProvider } from "../../context/FormProvider";
+import { FormProvider } from "../../context/form/FormProvider";
 import ResultsPage from "./ResultsPage";
 
 describe("ResultsPage", () => {

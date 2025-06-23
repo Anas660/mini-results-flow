@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../context/theme/ThemeContext";
 
 type Props = {
   label: React.ReactNode; // <-- Changed from string to React.ReactNode
@@ -20,29 +21,42 @@ const DropdownInput: React.FC<Props> = ({
   required = false,
   placeholder = "Select...",
   className = "",
-}) => (
-  <div className="mb-4">
-    <label htmlFor={name} className="block text-sm font-medium text-primary mb-1">
-      {label}
-    </label>
-    <select
-      id={name}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      aria-required={required}
-      aria-label={typeof label === "string" ? label : undefined}
-      className={`w-full border border-gray-300 rounded px-3 py-2 focus:outline-accent transition ${className}`}
-    >
-      <option value="">{placeholder}</option>
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
-    </select>
-  </div>
-);
+}) => {
+  const { colors } = useContext(ThemeContext);
+
+  return (
+    <div className="mb-4">
+      <label
+        htmlFor={name}
+        className="block text-sm font-medium mb-1"
+        style={{ color: colors.textPrimary }}
+      >
+        {label}
+      </label>
+      <select
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+        aria-required={required}
+        aria-label={typeof label === "string" ? label : undefined}
+        className={`w-full rounded px-3 py-2 transition ${className}`}
+        style={{
+          background: colors.cardBackground,
+          color: colors.textPrimary,
+          border: `1px solid ${colors.cardBorder}`,
+        }}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
 export default DropdownInput;

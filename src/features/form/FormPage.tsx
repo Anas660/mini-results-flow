@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFormContext } from "../../context/useFormContext";
+import { useFormContext } from "../../context/form/useFormContext";
 import TextInput from "../../components/TextInput";
 import SliderInput from "../../components/SliderInput";
 import RadioGroup from "../../components/RadioGroup";
 import DropdownInput from "../../components/DropdownInput";
+import { ThemeContext } from "../../context/theme/ThemeContext";
 
 const waterOptions = [
   { label: "1", value: 1 },
@@ -14,6 +15,7 @@ const waterOptions = [
 ];
 
 const FormPage: React.FC = () => {
+  const { colors } = useContext(ThemeContext);
   const { formData, setFormData } = useFormContext();
   const navigate = useNavigate();
   const [touched, setTouched] = useState(false);
@@ -30,7 +32,7 @@ const FormPage: React.FC = () => {
 
   // Helper for required asterisk
   const Required = () => (
-    <span aria-label="required" className="text-[#F75950] ml-1">
+    <span aria-label="required" style={{ color: colors.accent2 }} className="ml-1">
       *
     </span>
   );
@@ -90,18 +92,24 @@ const FormPage: React.FC = () => {
 
   return (
     <main
-      className="min-h-screen flex flex-col items-center justify-center bg-[#F8F4F4] px-2 sm:px-4 py-6"
+      style={{ background: colors.background }}
+      className="min-h-screen flex flex-col items-center justify-center px-2 sm:px-4 py-6"
       aria-label="Form page for entering health details"
     >
       <h1
-        className="mb-8 text-[34px] leading-[1.2em] font-semibold text-[#12241F] text-center font-inter"
-        style={{ letterSpacing: "-0.5px" }}
+        className="mb-8 text-[34px] leading-[1.2em] font-semibold text-center font-inter"
+        style={{ letterSpacing: "-0.5px", color: colors.textAccent }}
       >
-        Enter Your <span className="text-[#F75950]">Details</span>
+        Enter Your <span style={{ color: colors.accent2 }}>Details</span>
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-2xl p-4 sm:p-8 w-full max-w-xl space-y-6"
+        style={{
+          background: colors.cardBackground,
+          borderColor: colors.cardBorder,
+          color: colors.textPrimary,
+        }}
+        className="shadow-xl rounded-2xl p-4 sm:p-8 w-full max-w-xl space-y-6 border"
         aria-label="Results Input Form"
         noValidate
       >
@@ -138,11 +146,11 @@ const FormPage: React.FC = () => {
           min={0}
           max={100}
           required
-          trackColor="#36BC9F"
+          trackColor={colors.accent}
           aria-label="Body Fat Percentage"
           placeholder="0-100"
         />
-        <div className="text-xs text-gray-500">
+        <div className="text-xs" style={{ color: colors.textSecondary }}>
           Enter your estimated body fat percentage (0-100).
         </div>
         <SliderInput
@@ -159,11 +167,11 @@ const FormPage: React.FC = () => {
           min={0}
           max={40}
           required
-          trackColor="#36BC9F"
+          trackColor={colors.accent}
           aria-label="Body Mass Index"
           placeholder="0-40"
         />
-        <div className="text-xs text-gray-500">
+        <div className="text-xs" style={{ color: colors.textSecondary }}>
           Enter your Body Mass Index (0-40).
         </div>
         <TextInput
@@ -230,7 +238,11 @@ const FormPage: React.FC = () => {
 
         <button
           type="submit"
-          className="w-full mt-4 bg-[#36BC9F] text-white text-lg font-semibold py-3 rounded-xl transition disabled:opacity-50 font-inter hover:bg-[#2fa88d] focus:outline-none focus:ring-2 focus:ring-[#13556F] focus:ring-offset-2"
+          style={{
+            background: colors.accent,
+            color: colors.white,
+          }}
+          className="w-full mt-4 text-lg font-semibold py-3 rounded-xl transition disabled:opacity-50 font-inter hover:opacity-90 focus:outline-none focus:ring-2"
           disabled={!isValid}
           aria-disabled={!isValid}
           aria-label="See My Results"
@@ -240,7 +252,8 @@ const FormPage: React.FC = () => {
         {/* Validation feedback */}
         {!isValid && touched && (
           <div
-            className="text-xs text-[#F75950] mt-2 text-center font-inter"
+            className="text-xs mt-2 text-center font-inter"
+            style={{ color: colors.accent2 }}
             role="alert"
             aria-live="polite"
           >
@@ -250,7 +263,8 @@ const FormPage: React.FC = () => {
         {/* Inline helper for why button is disabled */}
         {!isValid && !touched && (
           <div
-            className="text-xs text-gray-500 mt-2 text-center font-inter"
+            className="text-xs mt-2 text-center font-inter"
+            style={{ color: colors.textSecondary }}
             aria-live="polite"
           >
             Please fill out all required fields to enable the button.

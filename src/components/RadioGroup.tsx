@@ -1,5 +1,5 @@
-
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../context/theme/ThemeContext";
 
 type Option = {
   label: string;
@@ -22,27 +22,46 @@ const RadioGroup: React.FC<Props> = ({
   value,
   onChange,
   required = false,
-}) => (
-  <fieldset className="mb-4" aria-required={required} aria-label={typeof label === "string" ? label : undefined}>
-    <legend className="block text-sm font-medium text-primary mb-1">{label}</legend>
-    <div className="flex gap-4">
-      {options.map((opt) => (
-        <label key={opt.value} className="flex items-center gap-1 cursor-pointer">
-          <input
-            type="radio"
-            name={name}
-            value={opt.value}
-            checked={value === opt.value}
-            onChange={onChange}
-            required={required}
-            aria-required={required}
-            className="accent-accent"
-          />
-          <span>{opt.label}</span>
-        </label>
-      ))}
-    </div>
-  </fieldset>
-);
+}) => {
+  const { colors } = useContext(ThemeContext);
+
+  return (
+    <fieldset
+      className="mb-4"
+      aria-required={required}
+      aria-label={typeof label === "string" ? label : undefined}
+    >
+      <legend
+        className="block text-sm font-medium mb-1"
+        style={{ color: colors.textPrimary }}
+      >
+        {label}
+      </legend>
+      <div className="flex gap-4">
+        {options.map((opt) => (
+          <label
+            key={opt.value}
+            className="flex items-center gap-1 cursor-pointer"
+            style={{ color: colors.textPrimary }}
+          >
+            <input
+              type="radio"
+              name={name}
+              value={opt.value}
+              checked={value === opt.value}
+              onChange={onChange}
+              required={required}
+              aria-required={required}
+              style={{
+                accentColor: colors.accent,
+              }}
+            />
+            <span>{opt.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+};
 
 export default RadioGroup;

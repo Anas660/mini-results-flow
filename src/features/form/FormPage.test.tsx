@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
-import { FormProvider } from "../../context/FormProvider";
+import { FormProvider } from "../../context/form/FormProvider";
 import FormPage from "./FormPage";
 
 describe("FormPage", () => {

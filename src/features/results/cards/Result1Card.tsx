@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import image from "../../../assets/result1.png";
-import { useFormContext } from "../../../context/useFormContext";
+import { useFormContext } from "../../../context/form/useFormContext";
+import { ThemeContext } from "../../../context/theme/ThemeContext";
 
 const Result1Card: React.FC = () => {
   const { formData } = useFormContext();
   const { gender, bodyFatPercent } = formData;
+  const { colors } = useContext(ThemeContext);
 
   // Helper to determine callout
   let callout = "";
@@ -33,18 +35,28 @@ const Result1Card: React.FC = () => {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 w-full max-w-xl flex flex-col items-center mb-6">
+    <div
+      style={{
+        background: colors.cardBackground,
+        borderColor: colors.cardBorder,
+        color: colors.textPrimary,
+      }}
+      className="rounded-2xl shadow-xl border p-4 sm:p-8 w-full max-w-xl flex flex-col items-center mb-6"
+    >
       {/* Icon */}
       <div className="flex justify-center items-center mb-2">
         <span className="text-[34px]">⚖️</span>
       </div>
       {/* Headline */}
-      <h1 className="text-center text-[34px] leading-[1.2em] font-semibold font-inter text-[#183B49] mb-1">
+      <h1
+        className="text-center text-[34px] leading-[1.2em] font-semibold font-inter mb-1"
+        style={{ color: colors.textPrimary }}
+      >
         Your Body Fat
         <br />
         <span>
           Percentage Is{" "}
-          <span className="text-[#F75950]">
+          <span style={{ color: colors.accent2 }}>
             {bodyFatPercent !== undefined && bodyFatPercent !== null
               ? `${bodyFatPercent}%`
               : "--"}
@@ -52,7 +64,10 @@ const Result1Card: React.FC = () => {
         </span>
       </h1>
       {/* Subtitle */}
-      <h2 className="text-center text-[20px] font-semibold font-inter text-[#183B49] mb-2">
+      <h2
+        className="text-center text-[20px] font-semibold font-inter mb-2"
+        style={{ color: colors.textPrimary }}
+      >
         Here’s Why That Matters
       </h2>
       {/* Images */}
@@ -66,7 +81,10 @@ const Result1Card: React.FC = () => {
         />
       </div>
       {/* Description */}
-      <p className="text-[20px] font-normal font-inter text-[#13556F] mb-2">
+      <p
+        className="text-[20px] font-normal font-inter mb-2"
+        style={{ color: colors.textSecondary }}
+      >
         Your body fat percentage gives a clearer picture than BMI alone. It tells
         us how much of your body is lean mass (muscle, organs, bone) vs stored
         fat.
@@ -77,7 +95,10 @@ const Result1Card: React.FC = () => {
       </p>
       {/* Conditional Callout */}
       {callout && (
-        <p className="text-[16px] font-normal font-inter text-[#F75950] mt-2 mb-6">
+        <p
+          className="text-[16px] font-normal font-inter mt-2 mb-6"
+          style={{ color: colors.accent2 }}
+        >
           {callout}
         </p>
       )}

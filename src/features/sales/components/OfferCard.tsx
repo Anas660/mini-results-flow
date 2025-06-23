@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ArrowRight } from "react-feather";
+import { ThemeContext } from "../../../context/theme/ThemeContext";
 
 type OfferCardProps = {
   planHeadingRef: React.RefObject<HTMLHeadingElement | null>;
@@ -15,16 +16,21 @@ const OfferCard: React.FC<OfferCardProps> = ({
   navigate,
 }) => {
   const [selected, setSelected] = useState<"full" | "split">("full");
+  const { colors } = useContext(ThemeContext);
 
   return (
     <div className="w-full mt-10">
       <h2
         ref={planHeadingRef}
-        className="text-center text-[22px] sm:text-2xl text-[#13556F] mb-2"
+        className="text-center text-[22px] sm:text-2xl mb-2"
+        style={{ color: colors.textSecondary }}
       >
         3 Month Custom Keto Plan
       </h2>
-      <div className="flex items-center justify-between bg-[#F75950] rounded-lg px-4 py-2 mb-4">
+      <div
+        className="flex items-center justify-between rounded-lg px-4 py-2 mb-4"
+        style={{ background: colors.accent2 }}
+      >
         <span className="text-white font-medium text-base">
           Discount expires in:
         </span>
@@ -46,16 +52,27 @@ const OfferCard: React.FC<OfferCardProps> = ({
         <div
           className={`border-2 rounded-xl p-4 flex items-center justify-between cursor-pointer transition ${
             selected === "split"
-              ? "border-[#36BC9F] bg-[#E6FAF6] relative"
-              : "border-gray-200"
+              ? ""
+              : ""
           }`}
+          style={{
+            borderColor: selected === "split" ? colors.accent : colors.cardBorder,
+            background: selected === "split" ? colors.background : colors.cardBackground,
+            position: selected === "split" ? "relative" : undefined,
+          }}
           onClick={() => setSelected("split")}
         >
           <div>
-            <div className="font-bold text-[#13556F] text-base mb-1">
+            <div
+              className="font-bold text-base mb-1"
+              style={{ color: colors.textSecondary }}
+            >
               3 PAYMENTS OF $29
             </div>
-            <div className="text-[#13556F] text-sm leading-tight">
+            <div
+              className="text-sm leading-tight"
+              style={{ color: colors.textSecondary }}
+            >
               Just $29 today. Split the rest
               <br />
               over 2 easy payments.
@@ -63,15 +80,15 @@ const OfferCard: React.FC<OfferCardProps> = ({
           </div>
           <span className="ml-4 flex items-center justify-center">
             <span
-              className={`w-8 h-8 border-2 rounded-full flex items-center justify-center ${
-                selected === "split"
-                  ? "border-[#36BC9F] bg-[#36BC9F]"
-                  : "border-gray-300 bg-white"
-              }`}
+              className="w-8 h-8 border-2 rounded-full flex items-center justify-center"
+              style={{
+                borderColor: selected === "split" ? colors.accent : colors.cardBorder,
+                background: selected === "split" ? colors.accent : colors.cardBackground,
+              }}
             >
               {selected === "split" && (
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <circle cx="14" cy="14" r="13" fill="#36BC9F" />
+                  <circle cx="14" cy="14" r="13" fill={colors.accent} />
                   <path
                     d="M9 15.5l4 4 6-8"
                     stroke="#fff"
@@ -86,11 +103,11 @@ const OfferCard: React.FC<OfferCardProps> = ({
         </div>
         {/* Full Payment Offer */}
         <div
-          className={`relative border-2 rounded-xl p-4 flex items-center justify-between cursor-pointer transition ${
-            selected === "full"
-              ? "border-[#36BC9F] bg-[#E6FAF6]"
-              : "border-gray-200 bg-white"
-          }`}
+          className={`relative border-2 rounded-xl p-4 flex items-center justify-between cursor-pointer transition`}
+          style={{
+            borderColor: selected === "full" ? colors.accent : colors.cardBorder,
+            background: selected === "full" ? colors.background : colors.cardBackground,
+          }}
           onClick={() => setSelected("full")}
         >
           <div className="flex-1 relative">
@@ -99,14 +116,14 @@ const OfferCard: React.FC<OfferCardProps> = ({
               style={{
                 top: "-16px",
                 right: "-64px",
-                background: selected === "full" ? "#36BC9F" : "#E6FAF6",
-                color: "#000",
+                background: selected === "full" ? colors.accent : colors.background,
+                color: selected === "full"? colors.background : colors.textSecondary,
                 fontWeight: 700,
                 fontSize: "16px",
                 border:
                   selected === "full"
-                    ? "2px solid #36BC9F"
-                    : "2px solid #E6FAF6",
+                    ? `2px solid ${colors.accent}`
+                    : `2px solid ${colors.background}`,
                 borderTopRightRadius: "10px",
                 borderBottomLeftRadius: "10px",
                 padding: "4px 16px",
@@ -118,11 +135,17 @@ const OfferCard: React.FC<OfferCardProps> = ({
               23% OFF
             </span>
             <div className="flex items-center gap-2 mb-1 mt-2">
-              <span className="bg-[#F75950] text-white text-xs font-bold px-2 py-1 rounded">
+              <span
+                className="text-white text-xs font-bold px-2 py-1 rounded"
+                style={{ background: colors.accent2 }}
+              >
                 DISCOUNT
               </span>
             </div>
-            <div className="text-[#13556F] font-medium text-base mb-6">
+            <div
+              className="font-medium text-base mb-6"
+              style={{ color: colors.textSecondary }}
+            >
               1 Payment of $67. Pay in full today
               <br />
               and save $20 instantly.
@@ -130,15 +153,15 @@ const OfferCard: React.FC<OfferCardProps> = ({
           </div>
           <span className="ml-4 flex items-center justify-center">
             <span
-              className={`w-8 h-8 border-2 rounded-full flex items-center justify-center ${
-                selected === "full"
-                  ? "border-[#36BC9F] bg-[#36BC9F]"
-                  : "border-gray-300 bg-white"
-              }`}
+              className="w-8 h-8 border-2 rounded-full flex items-center justify-center"
+              style={{
+                borderColor: selected === "full" ? colors.accent : colors.cardBorder,
+                background: selected === "full" ? colors.accent : colors.cardBackground,
+              }}
             >
               {selected === "full" && (
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <circle cx="14" cy="14" r="13" fill="#36BC9F" />
+                  <circle cx="14" cy="14" r="13" fill={colors.accent} />
                   <path
                     d="M9 15.5l4 4 6-8"
                     stroke="#fff"
@@ -153,10 +176,13 @@ const OfferCard: React.FC<OfferCardProps> = ({
           <span
             className="absolute left-0 right-0 bottom-0 text-black text-xs font-bold px-4 py-1 rounded-b-xl shadow flex justify-center items-center"
             style={{
-              background: selected === "full" ? "#36BC9F" : "",
+              background: selected === "full" ? colors.accent : "",
+              color: selected === "full" ? colors.background : colors.textSecondary,
               letterSpacing: 1,
               borderTop:
-                selected === "full" ? "1px solid #36BC9F" : "1px solid #E6FAF6",
+                selected === "full"
+                  ? `1px solid ${colors.accent}`
+                  : `1px solid ${colors.background}`,
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
               width: "100%",
@@ -168,13 +194,18 @@ const OfferCard: React.FC<OfferCardProps> = ({
         </div>
       </div>
       <div className="flex items-center justify-center gap-2 mt-8 mb-4 text-center">
-        <span className="text-[#13556F] text-xs font-medium">
+        <span
+          className="text-xs font-medium"
+          style={{ color: colors.textSecondary }}
+        >
           ✅ Risk-Free: Backed by 60-Day Money-Back Guarantee
         </span>
       </div>
       <button
-        className="bg-[#36BC9F] hover:bg-[#2ea88c] text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg"
+        className="font-bold py-3 px-8 rounded-lg flex items-center justify-center transition w-full relative pointer-events-auto shadow-lg"
         style={{
+          background: colors.accent,
+          color: colors.white,
           boxShadow: "0 2px 8px 0 rgba(54,188,159,0.10)",
           alignSelf: "center",
         }}
@@ -189,13 +220,13 @@ const OfferCard: React.FC<OfferCardProps> = ({
       >
         <span className="mx-auto">Continue</span>
         <span className="absolute right-6 text-lg">
-          <ArrowRight size={20} style={{ color: "white" }} />
+          <ArrowRight size={20} style={{ color: colors.white }} />
         </span>
       </button>
       <div className="w-full text-center mt-2">
         <button
-          className="text-gray-400 underline text-base font-medium cursor-pointer hover:text-gray-500"
-          style={{ pointerEvents: "auto" }}
+          className="underline text-base font-medium cursor-pointer"
+          style={{ pointerEvents: "auto", color: colors.cardBorder }}
           type="button"
           onClick={() => navigate("/")}
         >

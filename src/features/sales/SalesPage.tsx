@@ -1,20 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import StickyClaimButton from "./components/StickyClaimButton";
 import Header from "./components/Header";
 import ComparisonTable from "./components/ComparisonTable";
 import BenefitsList from "./components/BenefitsList";
-import ToolsSection from "./components/TooldsSection";
+import ToolsSection from "./components/ToolsSection";
 import TrustedBySection from "./components/TrustedBySection";
 import OfferCard from "./components/OfferCard";
 import GuaranteeSection from "./components/GuaranteeSection";
+import { ThemeContext } from "../../context/theme/ThemeContext";
 
 const SalesPage: React.FC = () => {
   const navigate = useNavigate();
   const planHeadingRef = useRef<HTMLHeadingElement | null>(null);
-  const offerCardRef = useRef<HTMLDivElement | null>(null); // Add ref for OfferCard
+  const offerCardRef = useRef<HTMLDivElement | null>(null);
   const [showStickyClaim, setShowStickyClaim] = useState(true);
   const hasHeadingBeenVisible = useRef(false);
+
+  // Theme colors
+  const { colors } = useContext(ThemeContext);
 
   // Countdown state
   const [countdown, setCountdown] = useState(600); // 10 minutes in seconds
@@ -81,7 +85,10 @@ const SalesPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-50 px-2 sm:px-4 py-6">
+    <div
+      className="min-h-screen flex flex-col items-center px-2 sm:px-4 py-6"
+      style={{ background: colors.background }}
+    >
       {showStickyClaim && (
         <StickyClaimButton
           onClick={() =>
@@ -90,7 +97,13 @@ const SalesPage: React.FC = () => {
         />
       )}
       <Header />
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-8 w-full max-w-xl mx-auto flex flex-col items-center mb-6">
+      <div
+        className="rounded-2xl shadow-xl border p-4 sm:p-8 w-full max-w-xl mx-auto flex flex-col items-center mb-6"
+        style={{
+          background: colors.cardBackground,
+          borderColor: colors.cardBorder,
+        }}
+      >
         <ComparisonTable />
         <BenefitsList />
         <ToolsSection />

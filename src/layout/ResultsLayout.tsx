@@ -1,10 +1,9 @@
 import { ArrowRight, ArrowLeft } from "react-feather";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { motion, AnimatePresence } from "framer-motion";
-
-const BUTTON_COLOR = "#36BC9F";
+import { ThemeContext } from "../context/theme/ThemeContext";
 
 const STEP_NAMES = [
   "", // step 1, no back button
@@ -26,6 +25,9 @@ const ResultsLayout: React.FC<{
   totalSteps: number;
 }> = ({ children, onNext, onBack, showBack, isLast, step, totalSteps }) => {
   const navigate = useNavigate();
+  const { colors } = useContext(ThemeContext);
+
+  const BUTTON_COLOR = colors.accent;
 
   const handleNext = () => {
     if (isLast) {
@@ -40,7 +42,10 @@ const ResultsLayout: React.FC<{
     step > 1 && step - 1 < STEP_NAMES.length ? STEP_NAMES[step - 1] : "";
 
   return (
-    <div className="relative w-full flex flex-col items-center">
+    <div
+      className="relative w-full flex flex-col items-center"
+      style={{ background: colors.background }}
+    >
       {/* Logo at the top center */}
       <div className="w-full flex justify-center pt-6 pb-2">
         <img src={logo} alt="Logo" className="h-10" />
@@ -87,17 +92,17 @@ const ResultsLayout: React.FC<{
       </div>
       {/* Buttons come right after content, not stuck to bottom */}
       <div className="w-full max-w-xl px-4 mt-4 mb-8">
-        {" "}
-        {/* max-w-xl */}
         <div className={`flex w-full gap-4 ${showBack ? "" : "justify-end"}`}>
           {showBack && backButtonLabel && (
             <button
               type="button"
-              className="bg-white border font-bold py-2 rounded-lg shadow transition w-1/2 flex items-center justify-between"
+              className="font-bold py-2 rounded-lg shadow transition w-1/2 flex items-center justify-between"
               style={{
+                background: colors.cardBackground,
                 borderColor: BUTTON_COLOR,
                 color: BUTTON_COLOR,
                 borderWidth: 2,
+                borderStyle: "solid",
               }}
               onClick={onBack}
             >
@@ -111,13 +116,13 @@ const ResultsLayout: React.FC<{
           {/* Always show Next button */}
           <button
             type="button"
-            className={`bg-[#36BC9F] text-white text-lg font-bold py-2 rounded-lg flex items-center justify-between gap-2 shadow transition hover:opacity-90 ${
-              showBack ? "w-1/2" : "w-1/2"
-            }`}
+            className="text-white text-lg font-bold py-2 rounded-lg flex items-center justify-between gap-2 shadow transition hover:opacity-90 w-1/2"
             onClick={handleNext}
             style={{
+              background: BUTTON_COLOR,
               borderWidth: 2,
               borderColor: BUTTON_COLOR,
+              borderStyle: "solid",
             }}
           >
             <span style={{ width: 20, marginRight: 8 }} />
